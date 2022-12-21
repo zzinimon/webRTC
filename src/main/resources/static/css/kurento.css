@@ -15,6 +15,12 @@
  *
  */
 @CHARSET "UTF-8";
+.lt-dashboard{
+	background-color: #EDEDED;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	text-align: center;
+}
 
 html {
 	position: relative;
