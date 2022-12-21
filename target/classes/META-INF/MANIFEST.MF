@@ -1,0 +1,23 @@
+Manifest-Version: 1.0
+Build-Jdk-Spec: 17
+Specification-Title: Kurento Java Tutorial - One2One Call Advanced
+Specification-Version: 6.18
+Specification-Vendor: Kurento
+Implementation-Title: Kurento Java Tutorial - One2One Call Advanced
+Implementation-Version: 6.18.0
+Implementation-Vendor: Kurento
+Build-Timestamp: 
+Created-By: Maven Integration for Eclipse
+Implementation-URL: https://www.kurento.org/kurento-tutorial/kurento-one
+ 2one-call-advanced/
+Java-Vendor: Eclipse Adoptium
+Java-Version: 17.0.1
+Os-Arch: amd64
+Os-Name: Windows 10
+Os-Version: 10.0
+Scm-Connection: scm:git:https://github.com/Kurento/kurento-tutorial-java
+ .git/kurento-one2one-call-advanced
+Scm-Revision: 
+Scm-Url: https://github.com/Kurento/kurento-tutorial-java/kurento-one2on
+ e-call-advanced
+
