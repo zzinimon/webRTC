@@ -35,6 +35,7 @@ function setRegisterState(nextState) {
 		break;
 	case REGISTERING:
 		disableButton('#register');
+		$('register').attr('value', 'Available');
 		break;
 	case REGISTERED:
 		disableButton('#register');
