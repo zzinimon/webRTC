@@ -36,6 +36,9 @@
 	border-radius: 20px;
 	color: white;
 }
+.lt-dashboard button:enabled:before{
+	content: 'Not ';
+}
 
 .lt-dashboard button:disabled{
 	background-color: #9EE33F;
