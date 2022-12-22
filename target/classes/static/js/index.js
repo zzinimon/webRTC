@@ -35,6 +35,9 @@ function setRegisterState(nextState) {
 		break;
 	case REGISTERING:
 		disableButton('#register');
+		$('#register').attr('display', 'none');
+		$('#advisor_name').attr('display', 'block');
+		$('#advisor_name').attr('content', 'block');
 		break;
 	case REGISTERED:
 		disableButton('#register');

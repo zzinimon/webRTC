@@ -31,12 +31,19 @@
 		<div class="row">
 			<div class="lt-dashboard">
 				<img id="preview" style="display: block; width:100px; padding:50px; margin: auto;" src="./img/logo_biz.png" alt="プロフィール写真">
-				<button disabled id="register" onclick="register();">Available</button>
-					
+				<button id="register" onclick="register();">Available</button>
 				<input id="name" name="name" class="form-control" type="text" placeholder="Name"
 					onkeydown="if (event.keyCode == 13) register();" />
 				<p>Advisor</p>
+			</div><br><hr><br>
+			
+			<div class="lt-dashboard">
+				<input id="peer" name="peer" class="form-control" type="text"
+					onkeydown="if (event.keyCode == 13) call();">
+				<div id="call" onclick="call();"><a href="./videoCall.html" style="text-decoration: none;  color:inherit;">Call Now</a></div>
+				
 			</div>
+			
 			<div class="col-md-5">
 				<label class="control-label" for="name">Name</label>
 				<div class="row">
@@ -45,8 +52,6 @@
 							onkeydown="if (event.keyCode == 13) register();" />
 					</div>
 					<div class="col-md-7 text-right">
-<!-- 						<a id="register" href="#" class="btn btn-primary"><span -->
-<!-- 							class="glyphicon glyphicon-plus"></span> Register</a> -->
 					</div>
 				</div>
 
@@ -57,13 +62,9 @@
 							onkeydown="if (event.keyCode == 13) call();">
 					</div>
 					<div class="col-md-7 text-right">
-						<a id="call" href="#" class="btn btn-success"><span
-							class="glyphicon glyphicon-play"></span> Call</a> <a id="terminate"
-							href="#" class="btn btn-danger"><span
-							class="glyphicon glyphicon-stop"></span> Stop</a> <a id="play"
-							href="#" class="btn btn-warning"><span
-							class="glyphicon glyphicon-play-circle"></span>Play Rec</a>
-
+						<a id="calltest" href="#" class="btn btn-success"> Call</a> 
+						<a id="terminate"href="#" class="btn btn-danger">Stop</a> 
+						<a id="play"href="#" class="btn btn-warning">Play Rec</a>
 					</div>
 				</div>
 				<br /> <label class="control-label" for="console">Console</label><br>

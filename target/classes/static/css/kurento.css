@@ -20,9 +20,9 @@
 	border: 1px solid #ccc;
 	border-radius: 5px;
 	text-align: center;
-	width: 500px;
+	width: 350px;
 	margin: auto;
-	padding-bottom: 30px;
+	padding: 30px;
 }
 
 .lt-dashboard button{
@@ -36,9 +36,6 @@
 	border-radius: 20px;
 	color: white;
 }
-.lt-dashboard button:enabled:before{
-	content: 'Not ';
-}
 
 .lt-dashboard button:disabled{
 	background-color: #9EE33F;
@@ -46,7 +43,27 @@
 }
 
 .lt-dashboard input{
+	margin: 10px;
+}
+
+.lt-dashboard button:enabled:before{
+	content: 'Not ';
+}
+
+.lt-dashboard input{
 	margin-top: 30px;
+}
+
+#call {
+	background-color: #9EE33F;
+	border-radius: 10px;
+	text-align: center;
+	color: white;
+	font-weight: bold;
+	height: 40px;
+	width: 130px;
+	margin: auto;
+	line-height: 40px;
 }
 
 html {
