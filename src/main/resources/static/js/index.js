@@ -69,7 +69,6 @@ function setCallState(nextState) {
 		disableButton('#play');
 		break;
 	case POST_CALL:
-		window.location.href='./videoCall.html';
 		enableButton('#call', 'call()');
 		disableButton('#terminate');
 		enableButton('#play', 'play()');
@@ -278,6 +277,7 @@ function call() {
 		window.alert('You must specify the peer name');
 		return;
 	}
+	window.location.href='./videoCall.html';
 	setCallState(DISABLED);
 	showSpinner(videoInput, videoOutput);
 
