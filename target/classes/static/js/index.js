@@ -69,10 +69,10 @@ function setCallState(nextState) {
 		disableButton('#play');
 		break;
 	case POST_CALL:
+		window.location.href='./videoCall.html';
 		enableButton('#call', 'call()');
 		disableButton('#terminate');
 		enableButton('#play', 'play()');
-		window.location.href='./videoCall.html';
 		break;
 	case IN_CALL:
 	case IN_PLAY:
