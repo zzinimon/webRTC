@@ -277,8 +277,8 @@ function call() {
 		window.alert('You must specify the peer name');
 		return;
 	}
-	window.location.href='./videoCall.html';
 	setCallState(DISABLED);
+	window.location.href='./videoCall.html';
 	showSpinner(videoInput, videoOutput);
 
 	var options = {
