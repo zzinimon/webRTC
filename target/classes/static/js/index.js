@@ -272,13 +272,15 @@ function register() {
 }
 
 function call() {
-	if (document.getElementById('peer').value == '') {
+	var peer = document.getElementById('peer').value;
+	var name = document.getElementById('name').value;
+	if (peer == '') {
 		document.getElementById('peer').focus();
 		window.alert('You must specify the peer name');
 		return;
 	}
 	setCallState(DISABLED);
-	window.location.href='./videoCall.html';
+	window.location.href='./videoCall.html?peer='+peer+'&name='+name;
 	showSpinner(videoInput, videoOutput);
 
 	var options = {

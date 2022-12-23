@@ -95,6 +95,16 @@ function enableButton(id, functionName) {
 	$(id).attr('onclick', functionName);
 }
 
+function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
+
+const peer = getParameterByName(peer);
+const advisor = getParameterByName(advisor);
+
 window.onload = function() {
 	console = new Console();
 	setRegisterState(NOT_REGISTERED);
@@ -294,8 +304,8 @@ function onOfferCall(error, offerSdp) {
 	console.log('Invoking SDP offer callback function');
 	var message = {
 		id : 'call',
-		from : document.getElementById('name').value,
-		to : document.getElementById('peer').value,
+		from : advisor,
+		to : peer,
 		sdpOffer : offerSdp
 	};
 	sendMessage(message);
@@ -330,7 +340,7 @@ function onOfferPlay(error, offerSdp) {
 	console.log('Invoking SDP offer callback function');
 	var message = {
 		id : 'play',
-		user : document.getElementById('peer').value,
+		user : peer,
 		sdpOffer : offerSdp
 	};
 	sendMessage(message);
