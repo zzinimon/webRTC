@@ -101,7 +101,7 @@ window.onload = function() {
 	var drag = new Draggabilly(document.getElementById('videoSmall'));
 	videoInput = document.getElementById('videoInput');
 	videoOutput = document.getElementById('videoOutput');
-	document.getElementById('name').focus();
+//	document.getElementById('name').focus();
 }
 
 window.onbeforeunload = function() {
