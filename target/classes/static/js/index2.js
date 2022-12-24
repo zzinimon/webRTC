@@ -197,10 +197,8 @@ function playResponse(message) {
 }
 
 function incomingCall(message) {
-	window.location.href='./videoCall.html?	peer='+message.from+'&advisor='+registerName;	
 	// If bussy just reject without disturbing user
 	if (callState != NO_CALL && callState != POST_CALL) {
-		window.location.href='./index.html';	
 		var response = {
 			id : 'incomingCallResponse',
 			from : message.from,
@@ -277,7 +275,6 @@ function call() {
 		return;
 	}
 	setCallState(DISABLED);
-	window.location.href='./videoCall.html?peer='+peer+'&advisor='+advisor+'&calling=true';
 	showSpinner(videoInput, videoOutput);
 
 	var options = {
