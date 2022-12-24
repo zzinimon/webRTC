@@ -103,11 +103,12 @@ function getParameterByName(name) {
     }
 
 var peer = '';
-var advisor = '';
+var advisor = '';//myname
+var caller='';
+var callee='';
 window.onload = function() {
 	peer = getParameterByName("peer");
 	advisor = getParameterByName("advisor");
-	from = advisor;
 	console = new Console();
 	var message = {
 		id : 'register',
@@ -119,7 +120,26 @@ window.onload = function() {
 	videoInput = document.getElementById('videoInput');
 	videoOutput = document.getElementById('videoOutput');
 	if(getParameterByName("calling") == "true"){
+		caller=advisor;
+		callee=peer;
 		call();
+	}else{
+		caller=peer;
+		callee=advisor;
+		showSpinner(videoInput, videoOutput);
+
+		var options = {
+			localVideo : videoInput,
+			remoteVideo : videoOutput,
+			onicecandidate : onIceCandidate
+		}
+		webRtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendrecv(options,
+				function(error) {
+					if (error) {
+						return console.error(error);
+					}
+					this.generateOffer(onOfferIncomingCall);
+				});
 	}
 }
 

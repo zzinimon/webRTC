@@ -197,7 +197,6 @@ function playResponse(message) {
 }
 
 function incomingCall(message) {
-	window.location.href='./videoCall.html?	peer='+message.from+'&advisor='+registerName;	
 	// If bussy just reject without disturbing user
 	if (callState != NO_CALL && callState != POST_CALL) {
 		window.location.href='./index.html';	
@@ -213,21 +212,22 @@ function incomingCall(message) {
 	setCallState(DISABLED);
 	if (confirm('User ' + message.from
 			+ ' is calling you. Do you accept the call?')) {
-		showSpinner(videoInput, videoOutput);
-
-		from = message.from;
-		var options = {
-			localVideo : videoInput,
-			remoteVideo : videoOutput,
-			onicecandidate : onIceCandidate
-		}
-		webRtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendrecv(options,
-				function(error) {
-					if (error) {
-						return console.error(error);
-					}
-					this.generateOffer(onOfferIncomingCall);
-				});
+		window.location.href='./videoCall.html?	peer='+message.from+'&advisor='+registerName;	
+//		showSpinner(videoInput, videoOutput);
+//
+//		from = message.from;
+//		var options = {
+//			localVideo : videoInput,
+//			remoteVideo : videoOutput,
+//			onicecandidate : onIceCandidate
+//		}
+//		webRtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendrecv(options,
+//				function(error) {
+//					if (error) {
+//						return console.error(error);
+//					}
+//					this.generateOffer(onOfferIncomingCall);
+//				});
 	} else {
 		var response = {
 			id : 'incomingCallResponse',
