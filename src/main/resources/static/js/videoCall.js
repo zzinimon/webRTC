@@ -107,6 +107,7 @@ var advisor = '';
 window.onload = function() {
 	peer = getParameterByName("peer");
 	advisor = getParameterByName("advisor");
+	from = advisor;
 	console = new Console();
 	setRegisterState(REGISTERED);
 	var drag = new Draggabilly(document.getElementById('videoSmall'));
@@ -115,9 +116,9 @@ window.onload = function() {
 	call();
 }
 
-//window.onbeforeunload = function() {
-//	ws.close();
-//}
+window.onbeforeunload = function() {
+	ws.close();
+}
 
 ws.onmessage = function(message) {
 	var parsedMessage = JSON.parse(message.data);
