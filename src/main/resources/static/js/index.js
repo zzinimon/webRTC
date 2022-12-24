@@ -276,7 +276,7 @@ function call() {
 		return;
 	}
 	setCallState(DISABLED);
-	window.location.href='./videoCall.html?peer='+peer+'&advisor='+advisor;
+	window.location.href='./videoCall.html?peer='+peer+'&advisor='+advisor+'&calling=true';
 	showSpinner(videoInput, videoOutput);
 
 	var options = {

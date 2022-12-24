@@ -118,7 +118,9 @@ window.onload = function() {
 	var drag = new Draggabilly(document.getElementById('videoSmall'));
 	videoInput = document.getElementById('videoInput');
 	videoOutput = document.getElementById('videoOutput');
-	call();
+	if(getParameterByName("calling") == "true"){
+		call();
+	}
 }
 
 window.onbeforeunload = function() {
