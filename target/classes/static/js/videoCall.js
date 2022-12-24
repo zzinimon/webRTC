@@ -41,7 +41,7 @@ function setRegisterState(nextState) {
 		break;
 	case REGISTERED:
 		disableButton('#register');
-		setCallState(NO_CALL);
+		setCallState(IN_CALL);
 		break;
 	default:
 		return;
@@ -108,7 +108,7 @@ window.onload = function() {
 	peer = getParameterByName("peer");
 	advisor = getParameterByName("advisor");
 	console = new Console();
-	setRegisterState(NOT_REGISTERED);
+	setRegisterState(REGISTERED);
 	var drag = new Draggabilly(document.getElementById('videoSmall'));
 	videoInput = document.getElementById('videoInput');
 	videoOutput = document.getElementById('videoOutput');
@@ -283,8 +283,6 @@ function register() {
 }
 
 function call() {
-	peer = getParameterByName(peer);
-	advisor = getParameterByName(advisor);
 	showSpinner(videoInput, videoOutput);
 
 	var options = {
