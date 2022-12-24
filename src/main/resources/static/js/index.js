@@ -211,6 +211,7 @@ function incomingCall(message) {
 	setCallState(DISABLED);
 	if (confirm('User ' + message.from
 			+ ' is calling you. Do you accept the call?')) {
+		window.location.href='./videoCall.html?	peer='+message.from+'&advisor='+registerName;	
 		showSpinner(videoInput, videoOutput);
 
 		from = message.from;
@@ -258,7 +259,7 @@ function register() {
 		return;
 	}
 	setRegisterState(REGISTERING);
-
+	registerName = name;
 	var message = {
 		id : 'register',
 		name : name

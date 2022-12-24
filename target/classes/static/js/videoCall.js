@@ -181,6 +181,7 @@ function callResponse(message) {
 	if (message.response != 'accepted') {
 		console.info('Call not accepted by peer. Closing call');
 		stop();
+		window.location.href='./index.html?'
 		setCallState(NO_CALL);
 		if (message.message) {
 			alert(message.message);
@@ -377,7 +378,6 @@ function stop(message) {
 }
 
 function sendMessage(message) {
-	console.log("msg? = "+message);
 	var jsonMessage = JSON.stringify(message);
 	console.log('Sending message: ' + jsonMessage);
 	ws.send(jsonMessage);
