@@ -102,8 +102,6 @@ function getParameterByName(name) {
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
     }
 
-const peer = getParameterByName(peer);
-const advisor = getParameterByName(advisor);
 
 window.onload = function() {
 	console = new Console();
@@ -111,6 +109,8 @@ window.onload = function() {
 	var drag = new Draggabilly(document.getElementById('videoSmall'));
 	videoInput = document.getElementById('videoInput');
 	videoOutput = document.getElementById('videoOutput');
+	const peer = getParameterByName(peer);
+	const advisor = getParameterByName(advisor);
 	call();
 }
 
