@@ -102,10 +102,11 @@ function getParameterByName(name) {
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
     }
 
-
-const peer = '';getParameterByName(peer);
-const advisor = '';getParameterByName(advisor);
+var peer = '';
+var advisor = '';
 window.onload = function() {
+	peer = getParameterByName("peer");
+	advisor = getParameterByName("advisor");
 	console = new Console();
 	setRegisterState(NOT_REGISTERED);
 	var drag = new Draggabilly(document.getElementById('videoSmall'));

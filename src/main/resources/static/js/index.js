@@ -273,14 +273,14 @@ function register() {
 
 function call() {
 	var peer = document.getElementById('peer').value;
-	var name = document.getElementById('name').value;
+	var advisor = document.getElementById('name').value;
 	if (peer == '') {
 		document.getElementById('peer').focus();
 		window.alert('You must specify the peer name');
 		return;
 	}
 	setCallState(DISABLED);
-	window.location.href='./videoCall.html?peer='+peer+'&name='+name;
+	window.location.href='./videoCall.html?peer='+peer+'&advisor='+advisor;
 	showSpinner(videoInput, videoOutput);
 
 	var options = {
