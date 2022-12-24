@@ -113,7 +113,7 @@ window.onload = function() {
 		id : 'register',
 		name : advisor
 	};
-//	sendMessage(message);
+	sendMessage(message);
 	setRegisterState(REGISTERED);
 	var drag = new Draggabilly(document.getElementById('videoSmall'));
 	videoInput = document.getElementById('videoInput');
