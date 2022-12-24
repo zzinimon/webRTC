@@ -109,6 +109,11 @@ window.onload = function() {
 	advisor = getParameterByName("advisor");
 	from = advisor;
 	console = new Console();
+	var message = {
+		id : 'register',
+		name : advisor
+	};
+	sendMessage(message);
 	setRegisterState(REGISTERED);
 	var drag = new Draggabilly(document.getElementById('videoSmall'));
 	videoInput = document.getElementById('videoInput');
