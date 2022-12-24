@@ -372,6 +372,7 @@ function stop(message) {
 }
 
 function sendMessage(message) {
+	console.log(message);
 	var jsonMessage = JSON.stringify(message);
 	console.log('Sending message: ' + jsonMessage);
 	ws.send(jsonMessage);
