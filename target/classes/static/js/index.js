@@ -15,7 +15,7 @@
  *
  */
 
-var ws = new WebSocket('wss://' + '219.106.249.241' + '/call');
+var ws = new WebSocket('wss://' + '127.0.0.1' + '/call');
 var videoInput;
 var videoOutput;
 var webRtcPeer;
