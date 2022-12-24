@@ -115,9 +115,9 @@ window.onload = function() {
 	call();
 }
 
-window.onbeforeunload = function() {
-	ws.close();
-}
+//window.onbeforeunload = function() {
+//	ws.close();
+//}
 
 ws.onmessage = function(message) {
 	var parsedMessage = JSON.parse(message.data);
@@ -313,7 +313,6 @@ function onOfferCall(error, offerSdp) {
 }
 
 function play() {
-	var peer = document.getElementById('peer').value;
 	if (peer == '') {
 		window.alert("You must insert the name of the user recording to be played (field 'Peer')");
 		document.getElementById('peer').focus();
@@ -372,7 +371,7 @@ function stop(message) {
 }
 
 function sendMessage(message) {
-	console.log(message);
+	console.log("msg? = "+message);
 	var jsonMessage = JSON.stringify(message);
 	console.log('Sending message: ' + jsonMessage);
 	ws.send(jsonMessage);
