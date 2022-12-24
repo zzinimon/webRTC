@@ -35,9 +35,6 @@ function setRegisterState(nextState) {
 		break;
 	case REGISTERING:
 		disableButton('#register');
-		$('#register').attr('display', 'none');
-		$('#advisor_name').attr('display', 'block');
-		$('#advisor_name').attr('content', 'block');
 		break;
 	case REGISTERED:
 		disableButton('#register');
@@ -98,9 +95,14 @@ function enableButton(id, functionName) {
 window.onload = function() {
 	console = new Console();
 	setRegisterState(NOT_REGISTERED);
+	var drag = new Draggabilly(document.getElementById('videoSmall'));
 	videoInput = document.getElementById('videoInput');
 	videoOutput = document.getElementById('videoOutput');
 	document.getElementById('name').focus();
+}
+
+window.onbeforeunload = function() {
+	ws.close();
 }
 
 ws.onmessage = function(message) {
@@ -258,7 +260,7 @@ function register() {
 		return;
 	}
 	setRegisterState(REGISTERING);
-	registerName = name;
+
 	var message = {
 		id : 'register',
 		name : name
@@ -267,9 +269,7 @@ function register() {
 }
 
 function call() {
-	var peer = document.getElementById('peer').value;
-	var advisor = document.getElementById('name').value;
-	if (peer == '') {
+	if (document.getElementById('peer').value == '') {
 		document.getElementById('peer').focus();
 		window.alert('You must specify the peer name');
 		return;

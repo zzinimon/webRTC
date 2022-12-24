@@ -127,6 +127,9 @@ div#videoSmall {
 	z-index: 10;
 	padding: 0px;
 }
+#console{
+	width:640px;
+}
 
 div.dragged {
 	cursor: all-scroll !important;
