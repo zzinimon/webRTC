@@ -20,7 +20,7 @@
 	border: 1px solid #ccc;
 	border-radius: 5px;
 	text-align: center;
-	width: 350px;
+	width: inherit;
 	margin: auto;
 	padding: 30px;
 }
@@ -97,9 +97,15 @@ video, #console {
 	height: 175px;
 }
 
-#videoContainer {
+.container {
+	width:260px;
+	position:relative;
+	display: inline-block;
+	margin: 30px;
+}
+.videoContainer {
 	position: absolute;
-	float: left;
+	display: inline-block;
 }
 
 #videoBig {
