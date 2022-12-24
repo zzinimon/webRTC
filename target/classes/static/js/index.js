@@ -98,10 +98,9 @@ function enableButton(id, functionName) {
 window.onload = function() {
 	console = new Console();
 	setRegisterState(NOT_REGISTERED);
-	var drag = new Draggabilly(document.getElementById('videoSmall'));
 	videoInput = document.getElementById('videoInput');
 	videoOutput = document.getElementById('videoOutput');
-//	document.getElementById('name').focus();
+	document.getElementById('name').focus();
 }
 
 ws.onmessage = function(message) {
