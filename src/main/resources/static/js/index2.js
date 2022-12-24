@@ -101,6 +101,9 @@ window.onload = function() {
 	document.getElementById('name').focus();
 }
 
+window.onbeforeunload = function() {
+	ws.close();
+}
 
 ws.onmessage = function(message) {
 	var parsedMessage = JSON.parse(message.data);
