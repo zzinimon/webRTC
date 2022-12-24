@@ -103,14 +103,14 @@ function getParameterByName(name) {
     }
 
 
+const peer = '';getParameterByName(peer);
+const advisor = '';getParameterByName(advisor);
 window.onload = function() {
 	console = new Console();
 	setRegisterState(NOT_REGISTERED);
 	var drag = new Draggabilly(document.getElementById('videoSmall'));
 	videoInput = document.getElementById('videoInput');
 	videoOutput = document.getElementById('videoOutput');
-	const peer = getParameterByName(peer);
-	const advisor = getParameterByName(advisor);
 	call();
 }
 
@@ -282,6 +282,8 @@ function register() {
 }
 
 function call() {
+	peer = getParameterByName(peer);
+	advisor = getParameterByName(advisor);
 	showSpinner(videoInput, videoOutput);
 
 	var options = {
