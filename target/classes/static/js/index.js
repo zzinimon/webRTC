@@ -383,33 +383,7 @@ function cameraOff(){
 function cameraStop(){
 	if(videoInput.paused){
 		videoInput.play();
-		var options = {
-		localVideo : videoInput,
-		remoteVideo : videoOutput,
-		onicecandidate : onIceCandidate,
-		onerror : onError
-		}
-		webRtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendrecv(options,
-			function(error) {
-				if (error) {
-					return console.error(error);
-				}
-				webRtcPeer.generateOffer(onOfferCall);
-		});
 	}else{
-		var options = {
-		localVideo : videoInput.pause(),
-		remoteVideo : videoOutput,
-		onicecandidate : onIceCandidate,
-		onerror : onError
-		}
-		webRtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendrecv(options,
-			function(error) {
-				if (error) {
-					return console.error(error);
-				}
-				webRtcPeer.generateOffer(onOfferCall);
-		});
 		videoInput.pause();
 	}
 }
