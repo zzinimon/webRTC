@@ -94,7 +94,12 @@ ws.onmessage = function(message) {
 	var parsedMessage = JSON.parse(message.data);
 	console.info('Received message: ' + message.data);
 
-	switch (parsedMessage.id) {
+//	switch (parsedMessage.id) {
+//	case 'gpsResponse':
+//		gpsResponse(parsedMessage);
+//		break;
+
+
 	case 'registerResponse':
 		registerResponse(parsedMessage);
 		break;
@@ -348,36 +353,8 @@ screenShare()
 
 function mute(){
 	if (videoInput.muted) {
-		var options = {
-		audio : true,
-		localVideo : videoInput,
-		remoteVideo : videoOutput,
-		onicecandidate : onIceCandidate,
-		onerror : onError
-		}
-		webRtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendrecv(options,
-			function(error) {
-				if (error) {
-					return console.error(error);
-				}
-				webRtcPeer.generateOffer(onOfferCall);
-		});
 		videoInput.muted = false;
 	} else {
-		var options = {
-		audio : false,
-		localVideo : videoInput,
-		remoteVideo : videoOutput,
-		onicecandidate : onIceCandidate,
-		onerror : onError
-		}
-		webRtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendrecv(options,
-			function(error) {
-				if (error) {
-					return console.error(error);
-				}
-				webRtcPeer.generateOffer(onOfferCall);
-		});
 		videoInput.muted = true;
 	}
 }
@@ -429,11 +406,24 @@ function getGps(){
 		alert("Geolocation is not supported by this browser.");
 	}
 }
+
+
 function showPosition(position) {
-	content = "Latitude: " + position.coords.latitude
+	location = "Latitude: " + position.coords.latitude
     	+"\nLongitude: " + position.coords.longitude;
     alert(content);
-    console.log(content);
+	var options = {
+		user : myname,
+		location : location,
+		onerror : onError
+	}
+	webRtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendrecv(options,
+		function(error) {
+			if (error) {
+				return console.error(error);
+			}
+			webRtcPeer.generateOffer(onOfferCall);
+	});
 }
 
 function record(){

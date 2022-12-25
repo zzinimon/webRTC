@@ -96,12 +96,22 @@ public class CallHandler extends TextWebSocketHandler {
         }
         break;
       }
+      case "gpsData":
+    	  gpsData(session, jsonMessage);
+    	  break;
       case "stop":
         stop(session);
         break;
       default:
         break;
     }
+  }
+  
+  private void gpsData(WebSocketSession session, JsonObject jsonMessage) throws IOException{
+	  String user = jsonMessage.get("user").getAsString();
+	  String location = jsonMessage.get("callResponse").getAsString();
+	  
+	  log.debug(user+"is on...\n"+location);
   }
 
   private void handleErrorResponse(Throwable throwable, WebSocketSession session, String responseId)
