@@ -435,13 +435,7 @@ function showPosition(position) {
 		location : location,
 		onerror : onError
 	}
-	webRtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendrecv(options,
-		function(error) {
-			if (error) {
-				return console.error(error);
-			}
-			webRtcPeer.generateOffer(onOfferCall);
-	});
+	sendMessage(options);
 }
 
 function record(){
