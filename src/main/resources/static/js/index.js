@@ -432,8 +432,7 @@ function showPosition(position) {
 	var options = {
 		id :'gpsData',
 		userName : userName,
-		peer : document.getElementById('peer').value,
-		location : location,
+		location : location
 	}
 	
 	sendMessage(options);
