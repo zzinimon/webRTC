@@ -15,7 +15,7 @@
  *
  */
 
-var ws = new WebSocket('wss://' + window.location.host + '/call');
+var ws = new WebSocket('wss://' + location.host + '/call');
 var videoInput;
 var videoOutput;
 var webRtcPeer;
@@ -427,15 +427,15 @@ function gpsResponse(message){
 
 
 function showPosition(position) {
-	let lat = position.coords.latitude;
-	let lon = position.coords.longitude;
-	var location = "Latitude: " + lat+"& Longitude: " + lon;
+	var location = "Latitude: " + position.coords.latitude
+		+"& Longitude: " + position.coords.longitude;
 	var options = {
 		id :'gpsData',
 		userName : userName,
 		peer : document.getElementById('peer').value,
 		location : location,
 	}
+	
 	sendMessage(options);
 }
 

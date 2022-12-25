@@ -110,13 +110,19 @@ public class CallHandler extends TextWebSocketHandler {
   private void gpsData(JsonObject jsonMessage) throws IOException{
 	  String location = jsonMessage.get("location").getAsString();
 	  String userName = jsonMessage.get("userName").getAsString();
-	  String peer = jsonMessage.get("peer").getAsString();
-	  UserSession to = registry.getByName(peer);
+	  UserSession from = registry.getByName(userName);
+	  
+	  UserSession peer =
+	            (from.getCallingFrom() != null) ? registry.getByName(from
+	                .getCallingFrom()) : from.getCallingTo() != null ? registry
+	                    .getByName(from.getCallingTo()) : null;
+	  
+	  
 	  
 	  JsonObject message = new JsonObject();
 	  message.addProperty("location", userName+"is on...\n"+location);
 	  
-	  to.sendMessage(message);
+	  peer.sendMessage(message);
   }
 
   private void handleErrorResponse(Throwable throwable, WebSocketSession session, String responseId)
