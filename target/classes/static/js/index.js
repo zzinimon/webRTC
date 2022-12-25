@@ -96,6 +96,7 @@ ws.onmessage = function(message) {
 
 	switch (parsedMessage.id) {
 	case 'gpsResponse':
+		gpsResponse(parsedMessage);
 		break;
 
 
@@ -420,10 +421,13 @@ function getGps(){
 		alert("Geolocation is not supported by this browser.");
 	}
 }
+function gpsResponse(message){
+	
+}
 
 
 function showPosition(position) {
-	location = "Latitude: " + position.coords.latitude
+	var location = "Latitude: " + position.coords.latitude
     	+"\nLongitude: " + position.coords.longitude;
 	var options = {
 		id :'gpsData',
