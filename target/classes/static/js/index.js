@@ -334,3 +334,58 @@ $(document).delegate('*[data-toggle="lightbox"]', 'click', function(event) {
 	event.preventDefault();
 	$(this).ekkoLightbox();
 });
+/*
+videoInput = local
+videoOutput = remote
+terminate()
+mute()
+cameraOff()
+cameraStop()
+getGps()
+record()
+screenShare()
+ */
+
+function mute(){
+	alert("mute!");
+	if (videoInput.muted) {
+		videoInput.muted = false;
+	} else {
+		videoInput.muted = true;
+	}
+}
+function cameraOff(){
+	if(videoInput.style.visibility=='hidden'){
+		videoInput.style.visibility='visible'
+	}else{
+		videoInput.style.visibility='hidden'
+	}
+}
+function cameraStop(){
+	if(videoInput.paused){
+		videoInput.play();
+	}else{
+		videoInput.pause();
+	}
+	alert("videoInput.pause()=true or false? "+videoInput.pause());
+}
+
+function getGps(){
+	if (navigator.geolocation) {
+		navigator.geolocation.getCurrentPosition(showPosition);
+	} else {
+		alert("Geolocation is not supported by this browser.");
+	}
+}
+function showPosition(position) {
+	content = "Latitude: " + position.coords.latitude
+    	+"\nLongitude: " + position.coords.longitude;
+    alert(content);
+}
+
+function record(){
+	alert("record!");
+}
+function screenShare(){
+	alert("screenShare!");
+}
