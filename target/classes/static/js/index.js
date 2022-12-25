@@ -95,9 +95,8 @@ ws.onmessage = function(message) {
 	console.info('Received message: ' + message.data);
 
 	switch (parsedMessage.id) {
-//	case 'gpsResponse':
-//		gpsResponse(parsedMessage);
-//		break;
+	case 'gpsResponse':
+		break;
 
 
 	case 'registerResponse':
