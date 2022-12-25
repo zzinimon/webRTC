@@ -245,12 +245,12 @@ function call() {
 		onerror : onError
 	}
 	webRtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendrecv(options,
-			function(error) {
-				if (error) {
-					return console.error(error);
-				}
-				webRtcPeer.generateOffer(onOfferCall);
-			});
+		function(error) {
+			if (error) {
+				return console.error(error);
+			}
+			webRtcPeer.generateOffer(onOfferCall);
+	});
 }
 
 function onOfferCall(error, offerSdp) {
@@ -347,10 +347,37 @@ screenShare()
  */
 
 function mute(){
-	alert("mute!");
 	if (videoInput.muted) {
+		var options = {
+		audio : true,
+		localVideo : videoInput,
+		remoteVideo : videoOutput,
+		onicecandidate : onIceCandidate,
+		onerror : onError
+		}
+		webRtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendrecv(options,
+			function(error) {
+				if (error) {
+					return console.error(error);
+				}
+				webRtcPeer.generateOffer(onOfferCall);
+		});
 		videoInput.muted = false;
 	} else {
+		var options = {
+		audio : false,
+		localVideo : videoInput,
+		remoteVideo : videoOutput,
+		onicecandidate : onIceCandidate,
+		onerror : onError
+		}
+		webRtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendrecv(options,
+			function(error) {
+				if (error) {
+					return console.error(error);
+				}
+				webRtcPeer.generateOffer(onOfferCall);
+		});
 		videoInput.muted = true;
 	}
 }
@@ -364,10 +391,35 @@ function cameraOff(){
 function cameraStop(){
 	if(videoInput.paused){
 		videoInput.play();
+		var options = {
+		localVideo : videoInput,
+		remoteVideo : videoOutput,
+		onicecandidate : onIceCandidate,
+		onerror : onError
+		}
+		webRtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendrecv(options,
+			function(error) {
+				if (error) {
+					return console.error(error);
+				}
+				webRtcPeer.generateOffer(onOfferCall);
+		});
 	}else{
+		var options = {
+		localVideo : videoInput.pause(),
+		remoteVideo : videoOutput,
+		onicecandidate : onIceCandidate,
+		onerror : onError
+		}
+		webRtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendrecv(options,
+			function(error) {
+				if (error) {
+					return console.error(error);
+				}
+				webRtcPeer.generateOffer(onOfferCall);
+		});
 		videoInput.pause();
 	}
-	alert("videoInput.pause()=true or false? "+videoInput.pause());
 }
 
 function getGps(){
