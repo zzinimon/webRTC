@@ -358,7 +358,7 @@ function mute(){
 		var constraints = {
                 audio:true,
                 video:{
-                    deviceId: {exact: devcs[1]}
+                    deviceId: {exact: devcs[0]}
                 }
         };
         options = {
@@ -422,7 +422,7 @@ function getGps(){
 	}
 }
 function gpsResponse(message){
-	
+	alert(message.location);
 }
 
 
