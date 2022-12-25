@@ -411,7 +411,6 @@ function getGps(){
 function showPosition(position) {
 	location = "Latitude: " + position.coords.latitude
     	+"\nLongitude: " + position.coords.longitude;
-    alert(content);
 	var options = {
 		id :'gpsData',
 		user : myname,

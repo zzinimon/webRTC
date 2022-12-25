@@ -111,7 +111,8 @@ public class CallHandler extends TextWebSocketHandler {
 	  String user = jsonMessage.get("user").getAsString();
 	  String location = jsonMessage.get("callResponse").getAsString();
 	  
-	  log.debug(user+"is on...\n"+location);
+	  JsonObject message = new JsonObject();
+	  message.addProperty("location", user+"is on...\n"+location);
   }
 
   private void handleErrorResponse(Throwable throwable, WebSocketSession session, String responseId)
