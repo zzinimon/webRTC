@@ -94,7 +94,7 @@ ws.onmessage = function(message) {
 	var parsedMessage = JSON.parse(message.data);
 	console.info('Received message: ' + message.data);
 
-//	switch (parsedMessage.id) {
+	switch (parsedMessage.id) {
 //	case 'gpsResponse':
 //		gpsResponse(parsedMessage);
 //		break;
@@ -413,6 +413,7 @@ function showPosition(position) {
     	+"\nLongitude: " + position.coords.longitude;
     alert(content);
 	var options = {
+		id :'gpsData',
 		user : myname,
 		location : location,
 		onerror : onError
