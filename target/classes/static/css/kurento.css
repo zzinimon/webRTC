@@ -15,56 +15,6 @@
  *
  */
 @CHARSET "UTF-8";
-.lt-dashboard{
-	background-color: #EDEDED;
-	border: 1px solid #ccc;
-	border-radius: 5px;
-	text-align: center;
-	width: inherit;
-	margin: auto;
-	padding: 30px;
-}
-
-.lt-dashboard button{
-	background-color: #FBD036;
-	border: hidden;
-	font-weight: bold;
-	height: 40px;
-	width: 170px;
-	display: block;
-	margin: auto;
-	border-radius: 20px;
-	color: white;
-}
-
-.lt-dashboard button:disabled{
-	background-color: #9EE33F;
-	display: block;
-}
-
-.lt-dashboard input{
-	margin: 10px;
-}
-
-.lt-dashboard button:enabled:before{
-	content: 'Not ';
-}
-
-.lt-dashboard input{
-	margin-top: 30px;
-}
-
-#callbtn {
-	background-color: #9EE33F;
-	border-radius: 10px;
-	text-align: center;
-	color: white;
-	font-weight: bold;
-	height: 40px;
-	width: 130px;
-	margin: auto;
-	line-height: 40px;
-}
 
 html {
 	position: relative;
@@ -97,15 +47,9 @@ video, #console {
 	height: 175px;
 }
 
-.container {
-	width:260px;
-	position:relative;
-	display: inline-block;
-	margin: 30px;
-}
-.videoContainer {
+#videoContainer {
 	position: absolute;
-	display: inline-block;
+	float: left;
 }
 
 #videoBig {
@@ -126,9 +70,6 @@ div#videoSmall {
 	cursor: pointer;
 	z-index: 10;
 	padding: 0px;
-}
-#console{
-	width:640px;
 }
 
 div.dragged {

@@ -15,7 +15,7 @@
  *
  */
 
-package org.kurento.tutorial.one2onecalladv;
+package org.kurento.tutorial.one2onecall;
 
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -27,7 +27,7 @@ import org.springframework.web.socket.WebSocketSession;
  * 
  * @author Boni Garcia (bgarcia@gsyc.es)
  * @author Micael Gallego (micael.gallego@gmail.com)
- * @since 5.0.0
+ * @since 4.3.1
  */
 public class UserRegistry {
 

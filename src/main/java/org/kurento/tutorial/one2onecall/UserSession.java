@@ -15,7 +15,7 @@
  *
  */
 
-package org.kurento.tutorial.one2onecalladv;
+package org.kurento.tutorial.one2onecall;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -35,7 +35,7 @@ import com.google.gson.JsonObject;
  *
  * @author Boni Garcia (bgarcia@gsyc.es)
  * @author Micael Gallego (micael.gallego@gmail.com)
- * @since 5.0.0
+ * @since 4.3.1
  */
 public class UserSession {
 
@@ -48,8 +48,7 @@ public class UserSession {
   private String callingTo;
   private String callingFrom;
   private WebRtcEndpoint webRtcEndpoint;
-  private WebRtcEndpoint playingWebRtcEndpoint;
-  private final List<IceCandidate> candidateList = new ArrayList<>();
+  private final List<IceCandidate> candidateList = new ArrayList<IceCandidate>();
 
   public UserSession(WebSocketSession session, String name) {
     this.session = session;
@@ -100,12 +99,10 @@ public class UserSession {
   public void setWebRtcEndpoint(WebRtcEndpoint webRtcEndpoint) {
     this.webRtcEndpoint = webRtcEndpoint;
 
-    if (this.webRtcEndpoint != null) {
-      for (IceCandidate e : candidateList) {
-        this.webRtcEndpoint.addIceCandidate(e);
-      }
-      this.candidateList.clear();
+    for (IceCandidate e : candidateList) {
+      this.webRtcEndpoint.addIceCandidate(e);
     }
+    this.candidateList.clear();
   }
 
   public void addCandidate(IceCandidate candidate) {
@@ -114,18 +111,6 @@ public class UserSession {
     } else {
       candidateList.add(candidate);
     }
-
-    if (this.playingWebRtcEndpoint != null) {
-      this.playingWebRtcEndpoint.addIceCandidate(candidate);
-    }
-  }
-
-  public WebRtcEndpoint getPlayingWebRtcEndpoint() {
-    return playingWebRtcEndpoint;
-  }
-
-  public void setPlayingWebRtcEndpoint(WebRtcEndpoint playingWebRtcEndpoint) {
-    this.playingWebRtcEndpoint = playingWebRtcEndpoint;
   }
 
   public void clear() {

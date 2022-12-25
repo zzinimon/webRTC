@@ -7,10 +7,10 @@
 
 Copyright © 2013-2016 [Kurento]. Licensed under [Apache 2.0 License].
 
-kurento-one2one-call-advanced
-=============================
+kurento-one2one-call
+====================
 
-Kurento Java Tutorial: WebRTC one to one video call with recording and filtering.
+Kurento Java Tutorial: WebRTC one to one video call.
 
 Running this tutorial
 ---------------------
@@ -119,4 +119,4 @@ Before asking for support, please read first the [Kurento Netiquette Guidelines]
 [readthedocs.org]: http://kurento.readthedocs.org/
 [Open API specification]: http://kurento.github.io/doc-kurento/
 [apiary.io]: http://docs.streamoriented.apiary.io/
-[instructions]: https://kurento.openvidu.io/docs/current/tutorials/java/tutorial-one2one-adv.html
+[instructions]: https://kurento.openvidu.io/docs/current/tutorials/java/tutorial-one2one.html
