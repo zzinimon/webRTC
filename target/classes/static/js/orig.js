@@ -37,9 +37,6 @@ function setRegisterState(nextState) {
 		break;
 	case REGISTERING:
 		disableButton('#register');
-		$('#register').attr('display', 'none');
-		$('#advisor_name').attr('display', 'block');
-		$('#advisor_name').attr('content', 'block');
 		break;
 	case REGISTERED:
 		disableButton('#register');
@@ -88,10 +85,10 @@ window.onload = function() {
 	document.getElementById('name').focus();
 }
 
-window.onbeforeunload = function() {
-	alert("test:ws is gonna close!!");
-	ws.close();
-}
+//window.onbeforeunload = function() {
+//	alert("ws is closing");
+//	ws.close();
+//}
 
 ws.onmessage = function(message) {
 	var parsedMessage = JSON.parse(message.data);
@@ -164,8 +161,6 @@ function startCommunication(message) {
 function incomingCall(message) {
 	// If bussy just reject without disturbing user
 	if (callState != NO_CALL) {
-		//added by kim
-		window.location.href='./index.html';
 		var response = {
 			id : 'incomingCallResponse',
 			from : message.from,
@@ -178,8 +173,6 @@ function incomingCall(message) {
 	setCallState(PROCESSING_CALL);
 	if (confirm('User ' + message.from
 			+ ' is calling you. Do you accept the call?')) {
-		window.location.href='./videoCall.html?	peer='+message.from+'&myname='+registerName;
-		//comment!!!!
 		showSpinner(videoInput, videoOutput);
 
 		from = message.from;
