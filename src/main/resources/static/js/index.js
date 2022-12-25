@@ -429,6 +429,7 @@ function gpsResponse(message){
 function showPosition(position) {
 	var location = "Latitude: " + position.coords.latitude
 		+"& Longitude: " + position.coords.longitude;
+		alert('username='+userName);
 	var options = {
 		id :'gpsData',
 		userName : userName,
