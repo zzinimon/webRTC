@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="expires" content="0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="shortcut icon" href="./img/kurento.png" type="image/png" />
+
+<link rel="stylesheet"
+	href="webjars/ekko-lightbox/dist/ekko-lightbox.min.css">
+<link rel="stylesheet" href="webjars/demo-console/index.css">
+<link rel="stylesheet" href="css/kim.css">
+
+<script src="webjars/jquery/dist/jquery.min.js"></script>
+<script src="webjars/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="webjars/ekko-lightbox/dist/ekko-lightbox.min.js"></script>
+<script src="webjars/draggabilly/draggabilly.pkgd.min.js"></script>
+<script src="/webjars/webrtc-adapter/release/adapter.js"></script>
+<script src="webjars/demo-console/index.js"></script>
+
+<script src="./js/kurento-utils.js"></script>
+<script src="./js/index.js"></script>
+<title>WebRTC Benkyokai with Kurento</title>
+</head>
+<body>
+<h1>Dash Board</h1>
+	<div class="container">
+		<div class="row">
+			<div class="lt-dashboard">
+				<img id="preview" style="display: block; width:100px; padding:50px; margin: auto;" src="./img/logo_biz.png" alt="プロフィール写真">
+				<button id="register" onclick="register();">Available</button>
+				<input id="name" name="name" class="form-control" type="text" placeholder="Name"
+					onkeydown="if (event.keyCode == 13) register();" />
+				<p>Advisor</p>
+			</div><br><hr><br>
+			
+			<div class="lt-dashboard">
+				<input id="peer" name="peer" class="form-control" type="text"
+					onkeydown="if (event.keyCode == 13) call();">
+				<div id="callbtn"><a id="call" href="#" style="text-decoration: none;  color:inherit;">Call Now</a></div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="videoContainer">
+		<div class="row">
+			<div class="col-md-7">
+				<div id="videoSmall">
+					<video id="videoInput" autoplay width="240px" height="180px"
+						poster="./img/logo_livetaskyell.svg"></video>
+				</div>
+				<div id="videoBig">
+					<video id="videoOutput" autoplay width="640px" height="480px"
+						poster="./img/logo_livetaskyell.svg"></video>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-5">
+			<br /> <label class="control-label" for="console">Console</label><br>
+			<br>
+			<div id="console" class="democonsole">
+				<ul></ul>
+			</div>
+		</div>
+	</div>
+
+	<footer style="margin-top:100px;">
+		<div>
+			<div>
+				<hr />
+				<img src="data:image/jpeg;base64,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" id="fotterLogo" alt="テナント Logo" class="img-fluid">
+				<div class="row">&copy; AGENTEC Co.,Ltd. All Rights Reserved.</div>
+			</div>
+		</div>
+	</footer>
+</body>
+</html>
