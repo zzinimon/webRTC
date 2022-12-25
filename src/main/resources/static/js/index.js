@@ -428,12 +428,12 @@ function gpsResponse(message){
 
 function showPosition(position) {
 	var location = "Latitude: " + position.coords.latitude
-    	+"\nLongitude: " + position.coords.longitude;
+    	+"Longitude: " + position.coords.longitude;
 	var options = {
 		id :'gpsData',
 		userName : userName,
+		peer : document.getElementById('peer').value,
 		location : location,
-		onerror : onError
 	}
 	sendMessage(options);
 }
