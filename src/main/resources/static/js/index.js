@@ -23,7 +23,7 @@ var response;
 var callerMessage;
 var from;
 
-var registerName = null;
+var userName = null;
 var registerState = null;
 const NOT_REGISTERED = 0;
 const REGISTERING = 1;
@@ -232,6 +232,7 @@ function register() {
 		name : name
 	};
 	sendMessage(message);
+	userName=name;
 	document.getElementById('peer').focus();
 }
 
@@ -354,6 +355,20 @@ screenShare()
 function mute(){
 	if (videoInput.muted) {
 		videoInput.muted = false;
+		var constraints = {
+                audio:true,
+                video:{
+                    deviceId: {exact: devcs[1]}
+                }
+        };
+        options = {
+            audio : false,
+            localVideo : videoInput,
+            remoteVideo : videoOutput,
+            mediaConstraints:constraints,
+            onicecandidate : onIceCandidate,
+            onerror : onError
+        }
 	} else {
 		videoInput.muted = true;
 	}
@@ -413,7 +428,7 @@ function showPosition(position) {
     	+"\nLongitude: " + position.coords.longitude;
 	var options = {
 		id :'gpsData',
-		user : myname,
+		user : userName,
 		location : location,
 		onerror : onError
 	}
