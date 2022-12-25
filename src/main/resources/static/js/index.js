@@ -427,8 +427,9 @@ function gpsResponse(message){
 
 
 function showPosition(position) {
-	var location = "Latitude: " + position.coords.latitude
-    	+"Longitude: " + position.coords.longitude;
+	let lat = position.coords.latitude;
+	let lon = position.coords.longitude;
+	var location = "Latitude: " + lat+"& Longitude: " + lon;
 	var options = {
 		id :'gpsData',
 		userName : userName,
