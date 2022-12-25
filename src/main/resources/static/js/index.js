@@ -381,6 +381,7 @@ function showPosition(position) {
 	content = "Latitude: " + position.coords.latitude
     	+"\nLongitude: " + position.coords.longitude;
     alert(content);
+    console.log(content);
 }
 
 function record(){
@@ -388,4 +389,8 @@ function record(){
 }
 function screenShare(){
 	alert("screenShare!");
+}
+
+function consoleClear(){
+	console = new Console();
 }

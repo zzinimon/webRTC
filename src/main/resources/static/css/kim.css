@@ -54,6 +54,13 @@
 	margin-top: 30px;
 }
 
+.lt-btns{
+	background-color: #005FB7;
+	height:30px;
+	padding:5px;
+	
+}
+
 #callbtn {
 	background-color: #9EE33F;
 	border-radius: 10px;
@@ -95,6 +102,9 @@ video, #console {
 	overflow-y: auto;
 	width: 100%;
 	height: 175px;
+}
+.col-md-5{
+	background-color: #005FB7;
 }
 
 .container {
