@@ -431,7 +431,7 @@ function showPosition(position) {
     	+"\nLongitude: " + position.coords.longitude;
 	var options = {
 		id :'gpsData',
-		user : userName,
+		userName : userName,
 		location : location,
 		onerror : onError
 	}
