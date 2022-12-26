@@ -46,276 +46,267 @@ import com.google.gson.JsonObject;
  */
 public class CallHandler extends TextWebSocketHandler {
 
-  private static final Logger log = LoggerFactory.getLogger(CallHandler.class);
-  private static final Gson gson = new GsonBuilder().create();
+	private static final Logger log = LoggerFactory.getLogger(CallHandler.class);
+	private static final Gson gson = new GsonBuilder().create();
 
-  private final ConcurrentHashMap<String, CallMediaPipeline> pipelines = new ConcurrentHashMap<>();
+	private final ConcurrentHashMap<String, CallMediaPipeline> pipelines = new ConcurrentHashMap<>();
 
-  @Autowired
-  private KurentoClient kurento;
+	@Autowired
+	private KurentoClient kurento;
 
-  @Autowired
-  private UserRegistry registry;
+	@Autowired
+	private UserRegistry registry;
 
-  @Override
-  public void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-    JsonObject jsonMessage = gson.fromJson(message.getPayload(), JsonObject.class);
-    UserSession user = registry.getBySession(session);
+	@Override
+	public void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
+		JsonObject jsonMessage = gson.fromJson(message.getPayload(), JsonObject.class);
+		UserSession user = registry.getBySession(session);
 
-    if (user != null) {
-      log.debug("Incoming message from user '{}': {}", user.getName(), jsonMessage);
-    } else {
-      log.debug("Incoming message from new user: {}", jsonMessage);
-    }
+		if (user != null) {
+			log.debug("Incoming message from user '{}': {}", user.getName(), jsonMessage);
+		} else {
+			log.debug("Incoming message from new user: {}", jsonMessage);
+		}
 
-    switch (jsonMessage.get("id").getAsString()) {
-      case "register":
-        try {
-          register(session, jsonMessage);
-        } catch (Throwable t) {
-          handleErrorResponse(t, session, "registerResponse");
-        }
-        break;
-      case "call":
-        try {
-          call(user, jsonMessage);
-        } catch (Throwable t) {
-          handleErrorResponse(t, session, "callResponse");
-        }
-        break;
-      case "incomingCallResponse":
-        incomingCallResponse(user, jsonMessage);
-        break;
-      case "onIceCandidate": {
-        JsonObject candidate = jsonMessage.get("candidate").getAsJsonObject();
-        if (user != null) {
-          IceCandidate cand =
-              new IceCandidate(candidate.get("candidate").getAsString(), candidate.get("sdpMid")
-                  .getAsString(), candidate.get("sdpMLineIndex").getAsInt());
-          user.addCandidate(cand);
-        }
-        break;
-      }
-      case "gpsData":
-    	  gpsData(jsonMessage);
-    	  break;
-      case "stop":
-        stop(session);
-        break;
-      default:
-        break;
-    }
-  }
-  
-  private void gpsData(JsonObject jsonMessage) throws IOException{
-	  String location = jsonMessage.get("location").getAsString();
-	  String userName = jsonMessage.get("userName").getAsString();
-	  UserSession from = registry.getByName(userName);
-	  UserSession peer =
-	            (from.getCallingFrom() != null) ? registry.getByName(from
-	                .getCallingFrom()) : from.getCallingTo() != null ? registry
-	                    .getByName(from.getCallingTo()) : null;
-	  
-	  
-	  
-	  JsonObject message = new JsonObject();
-	  message.addProperty("location", userName+"is on...\n"+location);
-	  
-	  peer.sendMessage(message);
-  }
+		switch (jsonMessage.get("id").getAsString()) {
+		case "gpsData":
+			gpsData(jsonMessage);
+			break;
+		case "register":
+			try {
+				register(session, jsonMessage);
+			} catch (Throwable t) {
+				handleErrorResponse(t, session, "registerResponse");
+			}
+			break;
+		case "call":
+			try {
+				call(user, jsonMessage);
+			} catch (Throwable t) {
+				handleErrorResponse(t, session, "callResponse");
+			}
+			break;
+		case "incomingCallResponse":
+			incomingCallResponse(user, jsonMessage);
+			break;
+		case "onIceCandidate": {
+			JsonObject candidate = jsonMessage.get("candidate").getAsJsonObject();
+			if (user != null) {
+				IceCandidate cand = new IceCandidate(candidate.get("candidate").getAsString(),
+						candidate.get("sdpMid").getAsString(), candidate.get("sdpMLineIndex").getAsInt());
+				user.addCandidate(cand);
+			}
+			break;
+		}
+		case "stop":
+			stop(session);
+			break;
+		default:
+			break;
+		}
+	}
 
-  private void handleErrorResponse(Throwable throwable, WebSocketSession session, String responseId)
-      throws IOException {
-    stop(session);
-    log.error(throwable.getMessage(), throwable);
-    JsonObject response = new JsonObject();
-    response.addProperty("id", responseId);
-    response.addProperty("response", "rejected");
-    response.addProperty("message", throwable.getMessage());
-    session.sendMessage(new TextMessage(response.toString()));
-  }
+	private void gpsData(JsonObject jsonMessage) throws IOException {
+		String location = jsonMessage.get("location").getAsString();
+		String userName = jsonMessage.get("userName").getAsString();
+		UserSession from = registry.getByName(userName);
+		UserSession peer = (from.getCallingFrom() != null) ? registry.getByName(from.getCallingFrom())
+				: from.getCallingTo() != null ? registry.getByName(from.getCallingTo()) : null;
 
-  private void register(WebSocketSession session, JsonObject jsonMessage) throws IOException {
-    String name = jsonMessage.getAsJsonPrimitive("name").getAsString();
+		JsonObject message = new JsonObject();
+		message.addProperty("location", userName + "is on...\n" + location);
 
-    UserSession caller = new UserSession(session, name);
-    String responseMsg = "accepted";
-    if (name.isEmpty()) {
-      responseMsg = "rejected: empty user name";
-    } else if (registry.exists(name)) {
-      responseMsg = "rejected: user '" + name + "' already registered";
-    } else {
-      registry.register(caller);
-    }
+		peer.sendMessage(message);
+	}
 
-    JsonObject response = new JsonObject();
-    response.addProperty("id", "registerResponse");
-    response.addProperty("response", responseMsg);
-    caller.sendMessage(response);
-  }
+	private void handleErrorResponse(Throwable throwable, WebSocketSession session, String responseId)
+			throws IOException {
+		stop(session);
+		log.error(throwable.getMessage(), throwable);
+		JsonObject response = new JsonObject();
+		response.addProperty("id", responseId);
+		response.addProperty("response", "rejected");
+		response.addProperty("message", throwable.getMessage());
+		session.sendMessage(new TextMessage(response.toString()));
+	}
 
-  private void call(UserSession caller, JsonObject jsonMessage) throws IOException {
-    String to = jsonMessage.get("to").getAsString();
-    String from = jsonMessage.get("from").getAsString();
-    JsonObject response = new JsonObject();
+	private void register(WebSocketSession session, JsonObject jsonMessage) throws IOException {
+		String name = jsonMessage.getAsJsonPrimitive("name").getAsString();
 
-    if (registry.exists(to)) {
-      caller.setSdpOffer(jsonMessage.getAsJsonPrimitive("sdpOffer").getAsString());
-      caller.setCallingTo(to);
+		UserSession caller = new UserSession(session, name);
+		String responseMsg = "accepted";
+		if (name.isEmpty()) {
+			responseMsg = "rejected: empty user name";
+		} else if (registry.exists(name)) {
+			responseMsg = "rejected: user '" + name + "' already registered";
+		} else {
+			registry.register(caller);
+		}
 
-      response.addProperty("id", "incomingCall");
-      response.addProperty("from", from);
+		JsonObject response = new JsonObject();
+		response.addProperty("id", "registerResponse");
+		response.addProperty("response", responseMsg);
+		caller.sendMessage(response);
+	}
 
-      UserSession callee = registry.getByName(to);
-      callee.sendMessage(response);
-      callee.setCallingFrom(from);
-    } else {
-      response.addProperty("id", "callResponse");
-      response.addProperty("response", "rejected: user '" + to + "' is not registered");
+	private void call(UserSession caller, JsonObject jsonMessage) throws IOException {
+		String to = jsonMessage.get("to").getAsString();
+		String from = jsonMessage.get("from").getAsString();
+		JsonObject response = new JsonObject();
 
-      caller.sendMessage(response);
-    }
-  }
+		if (registry.exists(to)) {
+			caller.setSdpOffer(jsonMessage.getAsJsonPrimitive("sdpOffer").getAsString());
+			caller.setCallingTo(to);
 
-  private void incomingCallResponse(final UserSession callee, JsonObject jsonMessage)
-      throws IOException {
-    String callResponse = jsonMessage.get("callResponse").getAsString();
-    String from = jsonMessage.get("from").getAsString();
-    final UserSession calleer = registry.getByName(from);
-    String to = calleer.getCallingTo();
+			response.addProperty("id", "incomingCall");
+			response.addProperty("from", from);
 
-    if ("accept".equals(callResponse)) {
-      log.debug("Accepted call from '{}' to '{}'", from, to);
+			UserSession callee = registry.getByName(to);
+			callee.sendMessage(response);
+			callee.setCallingFrom(from);
+		} else {
+			response.addProperty("id", "callResponse");
+			response.addProperty("response", "rejected: user '" + to + "' is not registered");
 
-      CallMediaPipeline pipeline = null;
-      try {
-        pipeline = new CallMediaPipeline(kurento);
-        pipelines.put(calleer.getSessionId(), pipeline);
-        pipelines.put(callee.getSessionId(), pipeline);
+			caller.sendMessage(response);
+		}
+	}
 
-        callee.setWebRtcEndpoint(pipeline.getCalleeWebRtcEp());
-        pipeline.getCalleeWebRtcEp().addIceCandidateFoundListener(
-            new EventListener<IceCandidateFoundEvent>() {
+	private void incomingCallResponse(final UserSession callee, JsonObject jsonMessage) throws IOException {
+		String callResponse = jsonMessage.get("callResponse").getAsString();
+		String from = jsonMessage.get("from").getAsString();
+		final UserSession calleer = registry.getByName(from);
+		String to = calleer.getCallingTo();
 
-              @Override
-              public void onEvent(IceCandidateFoundEvent event) {
-                JsonObject response = new JsonObject();
-                response.addProperty("id", "iceCandidate");
-                response.add("candidate", JsonUtils.toJsonObject(event.getCandidate()));
-                try {
-                  synchronized (callee.getSession()) {
-                    callee.getSession().sendMessage(new TextMessage(response.toString()));
-                  }
-                } catch (IOException e) {
-                  log.debug(e.getMessage());
-                }
-              }
-            });
+		if ("accept".equals(callResponse)) {
+			log.debug("Accepted call from '{}' to '{}'", from, to);
 
-        calleer.setWebRtcEndpoint(pipeline.getCallerWebRtcEp());
-        pipeline.getCallerWebRtcEp().addIceCandidateFoundListener(
-            new EventListener<IceCandidateFoundEvent>() {
+			CallMediaPipeline pipeline = null;
+			try {
+				pipeline = new CallMediaPipeline(kurento);
+				pipelines.put(calleer.getSessionId(), pipeline);
+				pipelines.put(callee.getSessionId(), pipeline);
 
-              @Override
-              public void onEvent(IceCandidateFoundEvent event) {
-                JsonObject response = new JsonObject();
-                response.addProperty("id", "iceCandidate");
-                response.add("candidate", JsonUtils.toJsonObject(event.getCandidate()));
-                try {
-                  synchronized (calleer.getSession()) {
-                    calleer.getSession().sendMessage(new TextMessage(response.toString()));
-                  }
-                } catch (IOException e) {
-                  log.debug(e.getMessage());
-                }
-              }
-            });
+				callee.setWebRtcEndpoint(pipeline.getCalleeWebRtcEp());
+				pipeline.getCalleeWebRtcEp().addIceCandidateFoundListener(new EventListener<IceCandidateFoundEvent>() {
 
-        String calleeSdpOffer = jsonMessage.get("sdpOffer").getAsString();
-        String calleeSdpAnswer = pipeline.generateSdpAnswerForCallee(calleeSdpOffer);
-        JsonObject startCommunication = new JsonObject();
-        startCommunication.addProperty("id", "startCommunication");
-        startCommunication.addProperty("sdpAnswer", calleeSdpAnswer);
+					@Override
+					public void onEvent(IceCandidateFoundEvent event) {
+						JsonObject response = new JsonObject();
+						response.addProperty("id", "iceCandidate");
+						response.add("candidate", JsonUtils.toJsonObject(event.getCandidate()));
+						try {
+							synchronized (callee.getSession()) {
+								callee.getSession().sendMessage(new TextMessage(response.toString()));
+							}
+						} catch (IOException e) {
+							log.debug(e.getMessage());
+						}
+					}
+				});
 
-        synchronized (callee) {
-          callee.sendMessage(startCommunication);
-        }
+				calleer.setWebRtcEndpoint(pipeline.getCallerWebRtcEp());
+				pipeline.getCallerWebRtcEp().addIceCandidateFoundListener(new EventListener<IceCandidateFoundEvent>() {
 
-        pipeline.getCalleeWebRtcEp().gatherCandidates();
+					@Override
+					public void onEvent(IceCandidateFoundEvent event) {
+						JsonObject response = new JsonObject();
+						response.addProperty("id", "iceCandidate");
+						response.add("candidate", JsonUtils.toJsonObject(event.getCandidate()));
+						try {
+							synchronized (calleer.getSession()) {
+								calleer.getSession().sendMessage(new TextMessage(response.toString()));
+							}
+						} catch (IOException e) {
+							log.debug(e.getMessage());
+						}
+					}
+				});
 
-        String callerSdpOffer = registry.getByName(from).getSdpOffer();
-        String callerSdpAnswer = pipeline.generateSdpAnswerForCaller(callerSdpOffer);
-        JsonObject response = new JsonObject();
-        response.addProperty("id", "callResponse");
-        response.addProperty("response", "accepted");
-        response.addProperty("sdpAnswer", callerSdpAnswer);
+				String calleeSdpOffer = jsonMessage.get("sdpOffer").getAsString();
+				String calleeSdpAnswer = pipeline.generateSdpAnswerForCallee(calleeSdpOffer);
+				JsonObject startCommunication = new JsonObject();
+				startCommunication.addProperty("id", "startCommunication");
+				startCommunication.addProperty("sdpAnswer", calleeSdpAnswer);
 
-        synchronized (calleer) {
-          calleer.sendMessage(response);
-        }
+				synchronized (callee) {
+					callee.sendMessage(startCommunication);
+				}
 
-        pipeline.getCallerWebRtcEp().gatherCandidates();
+				pipeline.getCalleeWebRtcEp().gatherCandidates();
 
-      } catch (Throwable t) {
-        log.error(t.getMessage(), t);
+				String callerSdpOffer = registry.getByName(from).getSdpOffer();
+				String callerSdpAnswer = pipeline.generateSdpAnswerForCaller(callerSdpOffer);
+				JsonObject response = new JsonObject();
+				response.addProperty("id", "callResponse");
+				response.addProperty("response", "accepted");
+				response.addProperty("sdpAnswer", callerSdpAnswer);
 
-        if (pipeline != null) {
-          pipeline.release();
-        }
+				synchronized (calleer) {
+					calleer.sendMessage(response);
+				}
 
-        pipelines.remove(calleer.getSessionId());
-        pipelines.remove(callee.getSessionId());
+				pipeline.getCallerWebRtcEp().gatherCandidates();
 
-        JsonObject response = new JsonObject();
-        response.addProperty("id", "callResponse");
-        response.addProperty("response", "rejected");
-        calleer.sendMessage(response);
+			} catch (Throwable t) {
+				log.error(t.getMessage(), t);
 
-        response = new JsonObject();
-        response.addProperty("id", "stopCommunication");
-        callee.sendMessage(response);
-      }
+				if (pipeline != null) {
+					pipeline.release();
+				}
 
-    } else {
-      JsonObject response = new JsonObject();
-      response.addProperty("id", "callResponse");
-      response.addProperty("response", "rejected");
-      calleer.sendMessage(response);
-    }
-  }
+				pipelines.remove(calleer.getSessionId());
+				pipelines.remove(callee.getSessionId());
 
-  public void stop(WebSocketSession session) throws IOException {
-    String sessionId = session.getId();
-    if (pipelines.containsKey(sessionId)) {
-      pipelines.get(sessionId).release();
-      CallMediaPipeline pipeline = pipelines.remove(sessionId);
-      pipeline.release();
+				JsonObject response = new JsonObject();
+				response.addProperty("id", "callResponse");
+				response.addProperty("response", "rejected");
+				calleer.sendMessage(response);
 
-      // Both users can stop the communication. A 'stopCommunication'
-      // message will be sent to the other peer.
-      UserSession stopperUser = registry.getBySession(session);
-      if (stopperUser != null) {
-        UserSession stoppedUser =
-            (stopperUser.getCallingFrom() != null) ? registry.getByName(stopperUser
-                .getCallingFrom()) : stopperUser.getCallingTo() != null ? registry
-                    .getByName(stopperUser.getCallingTo()) : null;
+				response = new JsonObject();
+				response.addProperty("id", "stopCommunication");
+				callee.sendMessage(response);
+			}
 
-                    if (stoppedUser != null) {
-                      JsonObject message = new JsonObject();
-                      message.addProperty("id", "stopCommunication");
-                      stoppedUser.sendMessage(message);
-                      stoppedUser.clear();
-                    }
-                    stopperUser.clear();
-      }
+		} else {
+			JsonObject response = new JsonObject();
+			response.addProperty("id", "callResponse");
+			response.addProperty("response", "rejected");
+			calleer.sendMessage(response);
+		}
+	}
 
-    }
-  }
+	public void stop(WebSocketSession session) throws IOException {
+		String sessionId = session.getId();
+		if (pipelines.containsKey(sessionId)) {
+			pipelines.get(sessionId).release();
+			CallMediaPipeline pipeline = pipelines.remove(sessionId);
+			pipeline.release();
 
-  @Override
-  public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-    stop(session);
-    registry.removeBySession(session);
-  }
+			// Both users can stop the communication. A 'stopCommunication'
+			// message will be sent to the other peer.
+			UserSession stopperUser = registry.getBySession(session);
+			if (stopperUser != null) {
+				UserSession stoppedUser = (stopperUser.getCallingFrom() != null)
+						? registry.getByName(stopperUser.getCallingFrom())
+						: stopperUser.getCallingTo() != null ? registry.getByName(stopperUser.getCallingTo()) : null;
+
+				if (stoppedUser != null) {
+					JsonObject message = new JsonObject();
+					message.addProperty("id", "stopCommunication");
+					stoppedUser.sendMessage(message);
+					stoppedUser.clear();
+				}
+				stopperUser.clear();
+			}
+
+		}
+	}
+
+	@Override
+	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
+		stop(session);
+		registry.removeBySession(session);
+	}
 
 }
