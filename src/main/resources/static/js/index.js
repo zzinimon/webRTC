@@ -340,17 +340,6 @@ $(document).delegate('*[data-toggle="lightbox"]', 'click', function(event) {
 	event.preventDefault();
 	$(this).ekkoLightbox();
 });
-/*
-videoInput = local
-videoOutput = remote
-terminate()
-mute()
-cameraOff()
-cameraStop()
-getGps()
-record()
-screenShare()
- */
 
 function mute(){
 	if (videoInput.muted) {
@@ -390,16 +379,6 @@ function cameraStop(){
 }
 
 function getGps(){
-	 /*if (navigator.geolocation) {
-		navigator.geolocation.getCurrentPosition(showPosition);
-	} else {
-		alert("Geolocation is not supported by this browser.");
-	}
-}
-
-function showPosition(position) {
-	var location = "Latitude: " + position.coords.latitude
-		+"& Longitude: " + position.coords.longitude;*/
 	var location = "here";
 	var options = {
 		id :'gpsData',
