@@ -75,6 +75,11 @@ public class CallHandler extends TextWebSocketHandler {
 		case "cameraOff":
 			cameraOff(user, jsonMessage);
 			break;
+		case "recording":
+			recording(user, jsonMessage);
+			break;
+			
+			
 		case "register":
 			try {
 				register(session, jsonMessage);
@@ -123,14 +128,25 @@ public class CallHandler extends TextWebSocketHandler {
 	}
 	private void cameraOff(UserSession user, JsonObject jsonMessage) throws IOException {
 		String status = jsonMessage.get("status").getAsString();
-		String userName = jsonMessage.get("user").getAsString();
-		UserSession from = registry.getByName(userName);
 		UserSession peer = (user.getCallingFrom() != null) ? registry.getByName(user.getCallingFrom())
 				: user.getCallingTo() != null ? registry.getByName(user.getCallingTo()) : null;
 		
 		JsonObject response = new JsonObject();
 		response.addProperty("id", "cameraResponse");
 		response.addProperty("status", status);
+		
+		synchronized (peer) {
+			peer.sendMessage(response);
+		}
+	}
+	private void recording(UserSession user, JsonObject jsonMessage) throws IOException {
+		String userName = jsonMessage.get("user").getAsString();
+		UserSession peer = (user.getCallingFrom() != null) ? registry.getByName(user.getCallingFrom())
+				: user.getCallingTo() != null ? registry.getByName(user.getCallingTo()) : null;
+		
+		JsonObject response = new JsonObject();
+		response.addProperty("id", "recordResponse");
+		response.addProperty("user", userName);
 		
 		synchronized (peer) {
 			peer.sendMessage(response);
