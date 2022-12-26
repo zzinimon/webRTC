@@ -95,10 +95,10 @@ ws.onmessage = function(message) {
 	console.info('Received message: ' + message.data);
 
 	switch (parsedMessage.id) {
-	case 'gpsResponse':
-		gpsResponse(parsedMessage);
+	case 'cameraResponse':
+		cameraResponse(parsedMessage);
 		break;
-
+		
 
 	case 'registerResponse':
 		registerResponse(parsedMessage);
@@ -363,11 +363,20 @@ function mute(){
 	}
 }
 function cameraOff(){
+	let setCamera;
 	if(videoInput.style.visibility=='hidden'){
 		videoInput.style.visibility='visible'
+		setCamera=visible;
 	}else{
 		videoInput.style.visibility='hidden'
+		setCamera=hidden;
 	}
+		var options={
+			id : 'cameraOff',
+			username : userName,
+			status: setCamera
+		}
+		sendMessage(options);
 }
 function cameraStop(){
 	let videoInput = videoInput = document.getElementById('videoInput');
@@ -377,9 +386,13 @@ function cameraStop(){
 		videoInput.pause();
 	}
 }
+function cameraResponse(response){
+	let cameraStatus = response.cameraResponse
+	videoOutput.style.visibility=cameraStatus
+}
 
 function getLocation(){
-	var location = "here";
+	var location = "right next to you";
 	var options = {
 		id :'gpsData',
 		userName : userName,
@@ -387,10 +400,6 @@ function getLocation(){
 	}
 	
 	sendMessage(options);
-}
-
-function gpsResponse(message){
-	alert(message.location);
 }
 
 function record(){

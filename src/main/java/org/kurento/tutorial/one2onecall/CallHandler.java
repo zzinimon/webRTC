@@ -72,6 +72,9 @@ public class CallHandler extends TextWebSocketHandler {
 		case "gpsData":
 			gpsData(jsonMessage);
 			break;
+		case "cameraOff":
+			cameraOff(jsonMessage);
+			break;
 		case "register":
 			try {
 				register(session, jsonMessage);
@@ -114,9 +117,21 @@ public class CallHandler extends TextWebSocketHandler {
 				: from.getCallingTo() != null ? registry.getByName(from.getCallingTo()) : null;
 
 		JsonObject message = new JsonObject();
-		message.addProperty("location", userName + "is on...\n" + location);
+		message.addProperty("location", userName + " is on..." + location);
 
 		peer.sendMessage(message);
+	}
+	private void cameraOff(JsonObject jsonMessage) throws IOException {
+		String status = jsonMessage.get("status").getAsString();
+		String userName = jsonMessage.get("userName").getAsString();
+		UserSession from = registry.getByName(userName);
+		UserSession peer = (from.getCallingFrom() != null) ? registry.getByName(from.getCallingFrom())
+				: from.getCallingTo() != null ? registry.getByName(from.getCallingTo()) : null;
+		
+		JsonObject response = new JsonObject();
+		response.addProperty("cameraResponse", status);
+		
+		peer.sendMessage(response);
 	}
 
 	private void handleErrorResponse(Throwable throwable, WebSocketSession session, String responseId)
