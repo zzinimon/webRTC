@@ -129,7 +129,8 @@ public class CallHandler extends TextWebSocketHandler {
 				: user.getCallingTo() != null ? registry.getByName(user.getCallingTo()) : null;
 		
 		JsonObject response = new JsonObject();
-		response.addProperty("cameraResponse", status);
+		response.addProperty("id", "cameraResponse");
+		response.addProperty("status", status);
 		
 		synchronized (peer) {
 			peer.sendMessage(response);
