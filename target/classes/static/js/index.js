@@ -390,21 +390,17 @@ function cameraStop(){
 }
 
 function getGps(){
-	if (navigator.geolocation) {
+	 /*if (navigator.geolocation) {
 		navigator.geolocation.getCurrentPosition(showPosition);
 	} else {
 		alert("Geolocation is not supported by this browser.");
 	}
 }
-function gpsResponse(message){
-	alert(message.location);
-}
-
 
 function showPosition(position) {
 	var location = "Latitude: " + position.coords.latitude
-		+"& Longitude: " + position.coords.longitude;
-		alert('username='+userName);
+		+"& Longitude: " + position.coords.longitude;*/
+	var location = "here";
 	var options = {
 		id :'gpsData',
 		userName : userName,
@@ -412,6 +408,10 @@ function showPosition(position) {
 	}
 	
 	sendMessage(options);
+}
+
+function gpsResponse(message){
+	alert(message.location);
 }
 
 function record(){
