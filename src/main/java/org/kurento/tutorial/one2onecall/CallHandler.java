@@ -73,7 +73,7 @@ public class CallHandler extends TextWebSocketHandler {
 			gpsData(jsonMessage);
 			break;
 		case "cameraOff":
-			cameraOff(user, jsonMessage);
+			cameraOff(session, jsonMessage);
 			break;
 		case "register":
 			try {
