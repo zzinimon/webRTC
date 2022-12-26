@@ -373,7 +373,7 @@ function cameraOff(){
 	}
 		var options={
 			id : 'cameraOff',
-			username : userName,
+			userName : userName,
 			status: setCamera
 		}
 		sendMessage(options);
