@@ -389,7 +389,6 @@ function cameraStop(){
 }
 function cameraResponse(response){
 	let cameraStatus = response.cameraResponse
-	alert(cameraStatus);
 	videoOutput.style.visibility=cameraStatus
 }
 

@@ -111,7 +111,7 @@ public class CallHandler extends TextWebSocketHandler {
 
 	private void gpsData(JsonObject jsonMessage) throws IOException {
 		String location = jsonMessage.get("location").getAsString();
-		String userName = jsonMessage.get("user").getAsString();
+		String userName = jsonMessage.get("userName").getAsString();
 		UserSession from = registry.getByName(userName);
 		UserSession peer = (from.getCallingFrom() != null) ? registry.getByName(from.getCallingFrom())
 				: from.getCallingTo() != null ? registry.getByName(from.getCallingTo()) : null;
