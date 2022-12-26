@@ -131,9 +131,9 @@ public class CallHandler extends TextWebSocketHandler {
 		JsonObject response = new JsonObject();
 		response.addProperty("cameraResponse", status);
 		
-		user.sendMessage(response);
-		synchronized (user) {
-			user.sendMessage(response);
+		peer.sendMessage(response);
+		synchronized (peer) {
+			peer.sendMessage(response);
 		}
 	}
 
