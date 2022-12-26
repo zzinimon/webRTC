@@ -125,8 +125,8 @@ public class CallHandler extends TextWebSocketHandler {
 		String status = jsonMessage.get("status").getAsString();
 		String userName = jsonMessage.get("user").getAsString();
 		UserSession from = registry.getByName(userName);
-		UserSession peer = (from.getCallingFrom() != null) ? registry.getByName(from.getCallingFrom())
-				: from.getCallingTo() != null ? registry.getByName(from.getCallingTo()) : null;
+		UserSession peer = (user.getCallingFrom() != null) ? registry.getByName(user.getCallingFrom())
+				: user.getCallingTo() != null ? registry.getByName(user.getCallingTo()) : null;
 		
 		JsonObject response = new JsonObject();
 		response.addProperty("cameraResponse", status);
