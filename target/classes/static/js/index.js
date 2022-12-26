@@ -371,9 +371,10 @@ function cameraOff(){
 		videoInput.style.visibility='hidden'
 		setCamera = 'hidden';
 	}
+	alert(userName);
 		var options={
 			id : 'cameraOff',
-			userName : userName,
+			user : userName,
 			status: setCamera
 		}
 		sendMessage(options);
