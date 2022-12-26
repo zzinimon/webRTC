@@ -98,6 +98,9 @@ ws.onmessage = function(message) {
 	case 'cameraResponse':
 		cameraResponse(parsedMessage);
 		break;
+	case 'recordResponse':
+		recordResponse(parsedMessage);
+		break;
 		
 
 	case 'registerResponse':
@@ -378,6 +381,11 @@ function cameraOff(){
 		}
 		sendMessage(options);
 }
+function cameraResponse(response){
+	let cameraStatus = response.status
+	videoOutput.style.visibility=cameraStatus
+}
+
 function cameraStop(){
 	let videoInput = videoInput = document.getElementById('videoInput');
 	if(videoInput.paused){
@@ -385,10 +393,6 @@ function cameraStop(){
 	}else{
 		videoInput.pause();
 	}
-}
-function cameraResponse(response){
-	let cameraStatus = response.status
-	videoOutput.style.visibility=cameraStatus
 }
 
 function getLocation(){
@@ -398,13 +402,22 @@ function getLocation(){
 		userName : userName,
 		location : location
 	}
-	
 	sendMessage(options);
 }
 
 function record(){
-	alert("record!");
+	alert("start record!");
+	var options = {
+		id :'recording',
+		user : userName
+	}
+	sendMessage(options);
 }
+function recordResponse(response){
+	let user = response.user
+	alert(user+" started to record!!");
+}
+
 function screenShare(){
 	alert("screenShare!");
 }
