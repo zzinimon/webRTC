@@ -366,10 +366,10 @@ function cameraOff(){
 	let setCamera;
 	if(videoInput.style.visibility=='hidden'){
 		videoInput.style.visibility='visible'
-		setCamera=visible;
+		setCamera = 'visible';
 	}else{
 		videoInput.style.visibility='hidden'
-		setCamera=hidden;
+		setCamera = 'hidden';
 	}
 		var options={
 			id : 'cameraOff',
