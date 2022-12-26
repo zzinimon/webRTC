@@ -371,7 +371,6 @@ function cameraOff(){
 		videoInput.style.visibility='hidden'
 		setCamera = 'hidden';
 	}
-	alert(userName);
 		var options={
 			id : 'cameraOff',
 			user : userName,
@@ -389,6 +388,7 @@ function cameraStop(){
 }
 function cameraResponse(response){
 	let cameraStatus = response.cameraResponse
+	alert("test:"+cameraStatus);
 	videoOutput.style.visibility=cameraStatus
 }
 
