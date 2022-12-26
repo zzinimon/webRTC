@@ -378,7 +378,7 @@ function cameraStop(){
 	}
 }
 
-function getGps(){
+function getLocation(){
 	var location = "here";
 	var options = {
 		id :'gpsData',
