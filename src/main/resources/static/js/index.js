@@ -349,9 +349,7 @@ function mute(){
 		videoInput.muted = false;
 		var constraints = {
                 audio:true,
-                video:{
-                    deviceId: {exact: devcs[0]}
-                }
+                video:true
         };
         options = {
             audio : false,
@@ -364,9 +362,7 @@ function mute(){
 	} else {
 		var constraints = {
                 audio:false,
-                video:{
-                    deviceId: {exact: devcs[0]}
-                }
+                video:true
         };
         options = {
             audio : false,
