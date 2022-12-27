@@ -420,7 +420,7 @@ function cameraResponse(response){
 }
 
 function cameraStop(){
-	let videoInput = videoInput = document.getElementById('videoInput');
+	let videoInput = document.getElementById('videoInput');
 	if(videoInput.paused){
 		videoInput.play();
 	}else{
