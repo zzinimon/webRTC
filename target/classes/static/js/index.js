@@ -362,8 +362,29 @@ function mute(){
             onerror : onError
         }
 	} else {
+		var constraints = {
+                audio:false,
+                video:{
+                    deviceId: {exact: devcs[0]}
+                }
+        };
+        options = {
+            audio : false,
+            localVideo : videoInput,
+            remoteVideo : videoOutput,
+            mediaConstraints:constraints,
+            onicecandidate : onIceCandidate,
+            onerror : onError
+        }
 		videoInput.muted = true;
 	}
+	webRtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendrecv(options,
+            function(error) {
+                if (error) {
+                    return console.error(error);
+                }
+                webRtcPeer.generateOffer(onOfferIncomingCall);
+            });
 }
 function cameraOff(){
 	let setCamera;
