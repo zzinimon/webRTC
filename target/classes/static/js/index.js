@@ -442,9 +442,9 @@ function cameraStop(){
 function cameraStopResponse(response){
 	let cameraPaused = response.status;
 	if(cameraPaused){
-		videoInput.pause();
+		videoOutput.pause();
 	}else{
-		videoInput.play();
+		videoOutput.play();
 	}
 }
 
