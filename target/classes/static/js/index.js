@@ -98,6 +98,9 @@ ws.onmessage = function(message) {
 	case 'cameraResponse':
 		cameraResponse(parsedMessage);
 		break;
+	case 'cameraStopResponse':
+		cameraStopResponse(parsedMessage);
+		break;
 	case 'recordResponse':
 		recordResponse(parsedMessage);
 		break;
@@ -407,12 +410,12 @@ function cameraOff(){
 		videoInput.style.visibility='hidden'
 		setCamera = 'hidden';
 	}
-		var options={
-			id : 'cameraOff',
-			user : userName,
-			status: setCamera
-		}
-		sendMessage(options);
+	var options={
+		id : 'cameraOff',
+		user : userName,
+		status: setCamera
+	}
+	sendMessage(options);
 }
 function cameraResponse(response){
 	let cameraStatus = response.status
@@ -421,11 +424,24 @@ function cameraResponse(response){
 
 function cameraStop(){
 	let videoInput = document.getElementById('videoInput');
+	let cameraPaused;
 	if(videoInput.paused){
 		videoInput.play();
+		cameraPaused = "false";
 	}else{
 		videoInput.pause();
+		cameraPaused = "true";
 	}
+	var options={
+		id : 'cameraStop',
+		user : userName,
+		status: cameraPaused
+	}
+	sendMessage(options);
+}
+function cameraStopResponse(response){
+	let cameraPaused = response.status;
+	videoOutput.paused = cameraPaused;
 }
 
 function getLocation(){

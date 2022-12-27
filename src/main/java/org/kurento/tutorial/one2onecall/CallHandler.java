@@ -75,6 +75,9 @@ public class CallHandler extends TextWebSocketHandler {
 		case "cameraOff":
 			cameraOff(user, jsonMessage);
 			break;
+		case "cameraStop":
+			cameraStop(user, jsonMessage);
+			break;
 		case "recording":
 			recording(user, jsonMessage);
 			break;
@@ -133,6 +136,19 @@ public class CallHandler extends TextWebSocketHandler {
 		
 		JsonObject response = new JsonObject();
 		response.addProperty("id", "cameraResponse");
+		response.addProperty("status", status);
+		
+		synchronized (peer) {
+			peer.sendMessage(response);
+		}
+	}
+	private void cameraStop(UserSession user, JsonObject jsonMessage) throws IOException {
+		String status = jsonMessage.get("status").getAsString();
+		UserSession peer = (user.getCallingFrom() != null) ? registry.getByName(user.getCallingFrom())
+				: user.getCallingTo() != null ? registry.getByName(user.getCallingTo()) : null;
+		
+		JsonObject response = new JsonObject();
+		response.addProperty("id", "cameraStopResponse");
 		response.addProperty("status", status);
 		
 		synchronized (peer) {
