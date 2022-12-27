@@ -374,13 +374,29 @@ function mute(){
         }
 		videoInput.muted = true;
 	}
-	webRtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendrecv(options,
-            function(error) {
-                if (error) {
-                    return console.error(error);
-                }
-                webRtcPeer.generateOffer(onOfferIncomingCall);
-            });
+	let deviceId;
+	 webUiCore.media.getDeviceList((list) => {
+	 	for(let item of list) {
+	 		if(item.kind == "videoInput") {
+	 			if(item.label.indexOf(g_videoFacingMode) > -1){
+	 				deviceId = item.deviceId;
+	 				if(deviceId != null) {
+	 					webUiCore.media.getUserMedia(constraints, (stream, err) => {
+	 						if(stream != null) {
+	 							webCore.rtc.setSource(g_localVideoId, stream);
+	 							localCamera.srcObject = stream;
+	 							localCamera.oncanplay = (ev) => {
+	 						        localCamera.play();
+	 						    };
+	 						}
+	 					});
+	 				}
+	 			}
+	 		}
+	 	}
+	
+	
+	 });
 }
 function cameraOff(){
 	let setCamera;
