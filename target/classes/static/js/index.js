@@ -99,6 +99,7 @@ ws.onmessage = function(message) {
 		cameraResponse(parsedMessage);
 		break;
 	case 'cameraStopResponse':
+	alert("stop!!");
 		cameraStopResponse(parsedMessage);
 		break;
 	case 'recordResponse':
@@ -442,6 +443,7 @@ function cameraStop(){
 function cameraStopResponse(response){
 	let cameraPaused = response.status;
 	videoOutput.paused = cameraPaused;
+	alert("paused="+cameraPaused);
 }
 
 function getLocation(){
